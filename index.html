@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tangible Strategic Consulting | Making Web3 Real</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Archivo+Black&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #6B1DE8;
+            --purple-dark: #4A0FA8;
+            --cyan: #00E5FF;
+            --yellow: #FFD600;
+            --pink: #FF006E;
+            --orange: #FF6B35;
+            --bg: #0A0014;
+            --bg-lighter: #1A0F2E;
+            --text: #FFFFFF;
+            --text-muted: #B8A9D4;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated gradient background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            background: 
+                radial-gradient(circle at 20% 30%, var(--purple) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, var(--cyan) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, var(--pink) 0%, transparent 50%);
+            animation: gradientShift 20s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            width: 140px;
+            height: auto;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            animation: fadeInDown 0.8s ease-out 0.2s both;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyan), var(--pink));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--cyan);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 5% 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .eyebrow {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--cyan);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 700px;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 1.1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            color: var(--text);
+            border: none;
+            box-shadow: 0 10px 30px rgba(107, 29, 232, 0.4);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            left: 0;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(107, 29, 232, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--cyan);
+        }
+
+        .btn-secondary:hover {
+            background: var(--cyan);
+            color: var(--bg);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.4);
+        }
+
+        /* Floating spheres decoration */
+        .sphere-decoration {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.6;
+            filter: blur(40px);
+        }
+
+        .sphere-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--purple);
+            top: 10%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .sphere-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--cyan);
+            top: 60%;
+            right: 5%;
+            animation-delay: 2s;
+        }
+
+        .sphere-3 {
+            width: 250px;
+            height: 250px;
+            background: var(--pink);
+            bottom: 10%;
+            right: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-30px) translateX(20px); }
+        }
+
+        /* Services Section */
+        .services {
+            padding: 8rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(107, 29, 232, 0.1), rgba(0, 229, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(107, 29, 232, 0.2), rgba(0, 229, 255, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cyan);
+            box-shadow: 0 20px 60px rgba(0, 229, 255, 0.2);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card h3 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+            font-size: 1.05rem;
+        }
+
+        /* Value Proposition */
+        .value-prop {
+            padding: 8rem 5%;
+            background: linear-gradient(180deg, transparent, rgba(107, 29, 232, 0.1), transparent);
+            position: relative;
+        }
+
+        .value-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .big-stat {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            background: linear-gradient(135deg, var(--cyan), var(--pink), var(--yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 2rem;
+        }
+
+        .value-text {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .feature-pills {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .pill {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .pill:hover {
+            background: rgba(0, 229, 255, 0.1);
+            border-color: var(--cyan);
+            transform: translateY(-3px);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 5%;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .cta-section p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 5% 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            width: 120px;
+            height: auto;
+            opacity: 0.7;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--cyan);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            nav {
+                gap: 1.5rem;
+            }
+
+            .hero {
+                padding: 4rem 5% 3rem;
+            }
+
+            .services {
+                padding: 4rem 5%;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .sphere-decoration {
+                display: none;
+            }
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="noise"></div>
+
+    <header>
+        <img src="Tangible_Logo.png" alt="Tangible" class="logo">
+        <nav>
+            <a href="#services">Services</a>
+            <a href="#approach">Approach</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="sphere-decoration sphere-1"></div>
+        <div class="sphere-decoration sphere-2"></div>
+        <div class="sphere-decoration sphere-3"></div>
+        
+        <div class="hero-content">
+            <div class="eyebrow">Web3 Strategy & Community Design</div>
+            <h1>Make the Intangible Feel Tangible</h1>
+            <p class="hero-description">
+                We partner with Web3 founders and teams to turn early momentum into something real: 
+                a brand people believe in, incentives that drive participation, and community experiences 
+                that keep people coming back.
+            </p>
+            <div class="cta-group">
+                <a href="#contact" class="btn btn-primary">Start a Project</a>
+                <a href="#services" class="btn btn-secondary">Explore Services</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <h2 class="section-title reveal">What We Do</h2>
+        <p class="section-subtitle reveal">Strategy, storytelling, and play—the foundation for Web3 brands that last</p>
+        
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon">🎯</div>
+                <h3>Brand Strategy & Positioning</h3>
+                <p>
+                    Cut through the noise with a clear brand story that resonates with your community. 
+                    We help you define who you are, what you stand for, and why people should care—beyond the tech.
+                </p>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon">💎</div>
+                <h3>Incentive Strategy & Utility Design</h3>
+                <p>
+                    Design token economics, NFT utility, and access models that create genuine value. 
+                    We craft incentive loops that reward participation without reducing your community to mercenaries.
+                </p>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon">🎮</div>
+                <h3>Community Experience & Engagement</h3>
+                <p>
+                    Build community experiences that people actually want to be part of. From onboarding flows 
+                    to ongoing engagement loops, we design the moments that turn participants into believers.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="value-prop" id="approach">
+        <div class="value-content">
+            <div class="big-stat reveal">Real Results</div>
+            <p class="value-text reveal">
+                In Web3, it's easy to get lost in abstraction—smart contracts, governance models, token mechanics. 
+                But none of it matters if people don't feel it. We bridge the gap between your vision and your 
+                community's reality, creating experiences that are as meaningful as they are measurable.
+            </p>
+            
+            <div class="feature-pills">
+                <div class="pill reveal">Strategy First</div>
+                <div class="pill reveal">Community-Centric</div>
+                <div class="pill reveal">Sustainable Growth</div>
+                <div class="pill reveal">Data-Informed</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <h2 class="reveal">Ready to Make It Real?</h2>
+        <p class="reveal">
+            Whether you're launching something new or scaling what's working, 
+            let's talk about how to turn momentum into movement.
+        </p>
+        <a href="mailto:hello@tangible.consulting" class="btn btn-primary reveal">Get in Touch</a>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <img src="Tangible_Logo.png" alt="Tangible" class="footer-logo">
+            <div class="footer-links">
+                <a href="#services">Services</a>
+                <a href="#approach">Approach</a>
+                <a href="mailto:hello@tangible.consulting">Contact</a>
+            </div>
+            <div>© 2026 Tangible Strategic Consulting</div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Scroll reveal animation
+        const reveals = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Initial check
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
